@@ -1,0 +1,86 @@
+import pygame
+import sys
+
+#Colors in RGB code
+WHITE = (255, 255, 255)
+RED   = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE  = (0, 0, 255)
+
+#Runs the pygame system
+pygame.init()
+#Set the in game to the cursor pygame built in crosshair
+pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_CROSSHAIR))
+#Opens the pygame game display wnindow
+screen = pygame.display.set_mode((1000, 700))
+#Changes the name of the window
+pygame.display.set_caption("EasyAim")
+
+#Determines framrate for the window
+clock = pygame.time.Clock()
+
+#Changes the screen background color (In the RGB format = White)
+screen.fill((255, 255, 255))
+
+#Limit the game to 60 frames per second
+clock.tick(600)
+
+#Target Information for the loop to get later
+TargetLocation = [
+    (600, 200),
+    (400, 100),
+    (500, 200)
+    ] 
+TargetSize = [
+    (40),
+    (60),
+    (30)
+    ]
+
+#Draws the shapes that are described in the target information. Using a for loop that reads all 3 lines for target location and target size and draws them accordingly
+for i in range(len(TargetLocation)):
+
+        pygame.draw.circle(
+            screen,
+            RED,
+            TargetLocation[i],
+            TargetSize[i]
+        )
+
+
+
+#Allows for the game to carry out what is in the loop while the game runs
+running = True
+
+while running:
+
+    for event in pygame.event.get():
+        #Allows the program to detect whenever a mouse button has been clicked, the if clause will trigger if a mouse button is pressed
+         if event.type == pygame.MOUSEBUTTONDOWN:
+             #This establishes the cursor's postion when the event occurs, in this case, a mouse button press
+             mouse_x, mouse_y = event.pos
+             
+            #Prints "Clicked" whenever the mouse is pressed  
+             print("Clicked:", mouse_x, mouse_y)
+
+             #Calculates and checks the distance from click to a corresponding target. The ** 2 squares the value obtained from the mouse x/y - TargetLocation becuase the value tends to be negative , so squaring it and then square rooting it (** 0.5) fixes that and retrieves a valid number. This process follows the pythagoras theorem
+             Distance = ((mouse_x - TargetLocation[0]) ** 2 +
+                         (mouse_y - TargetLocation[1]) ** 2) ** 0.5
+
+             #Checks if click hit the target and prints hit if the target is hit successfully. this is done by checking if the value calculated from the distance function is less than or equal to the target size
+             if Distance <= TargetSize:
+                print("Hit!")
+
+
+
+    pygame.display.update()
+
+
+
+#Updates the full display Surface to the screen
+pygame.display.flip()
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
