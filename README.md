@@ -41,11 +41,13 @@ Project Status
 Completed.
 
 Room for improvement and features to be added
+
 -Allow players to increase the number of targets through a setting
 -Have a way for players to increase the time limit if they want to
 -Allow players to restart the game once it ends instead of closing and rerunning the program
 
 Acknowledgements
+
 This project would not be possible without the information from the Pygame Documentation website and Stewart Watkiss's book on a beginner-friendly tutorial for coding in Pygame. Besides an obscene amount of trial and error on my part, the overwhelming majority of the code was coded with reference to those 2 sources.
 
 https://www.pygame.org/docs/index.html
