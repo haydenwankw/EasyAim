@@ -43,7 +43,9 @@ Completed.
 Room for improvement and features to be added
 
 -Allow players to increase the number of targets through a setting
+
 -Have a way for players to increase the time limit if they want to
+
 -Allow players to restart the game once it ends instead of closing and rerunning the program
 
 Acknowledgements
