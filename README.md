@@ -49,6 +49,7 @@ Acknowledgements
 This project would not be possible without the information from the Pygame Documentation website and Stewart Watkiss's book on a beginner-friendly tutorial for coding in Pygame. Besides an obscene amount of trial and error on my part, the overwhelming majority of the code was coded with reference to those 2 sources.
 
 https://www.pygame.org/docs/index.html
+
 Watkiss, Stewart. author. (2020). Beginning Game Programming with Pygame Zero : Coding Interactive Games on Raspberry Pi Using Python  (1st ed. 2020.). Apress. https://doi.org/10.1007/978-1-4842-5650-3
 
 
