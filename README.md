@@ -6,8 +6,7 @@ General Information
 
 EasyAim was designed to be a low-computing-stress way for people who want to either train their aim or warm it up without using traditional aim trainers that would take more RAM and take more time to open and close while they are waiting to find a match. I decided to code this specifically because I’ve always liked practicing my aim and getting better because it's something that I enjoy doing, and seeing the results gives me a sense of satisfaction. I’ve personally struggled with traditional aim trainers like AimLabs or Kovak’s because they can take up memory and thus cannot really be used while you have an actual game open. 
 
-Of course, you can solve this by getting more RAM, but that’s expensive and can take time, which isn’t always practical. So this is more of a passion project for me, as it is related to a pretty big hobby of mine, and it addresses one of my biggest pet peeves when it comes to actually getting better/warming up
- Thus, the code attached runs on a low-computing-stress engine and environment in Pygame. 
+Of course, you can solve this by getting more RAM, but that’s expensive and can take time, which isn’t always practical. So this is more of a passion project for me, since it relates to a pretty big hobby of mine and addresses one of my biggest pet peeves when it comes to getting better/warming up. Thus, the code attached runs on a low-computing-stress engine and environment in Pygame. 
 
 Technologies used
 
@@ -44,6 +43,8 @@ Completed.
 Room for improvement and features to be added
 
 -Allow players to increase the number of targets through a setting
+
+-Make it so that when targets respawn, they can't spawn on top of each other and clip one another
 
 -Have a way for players to increase the time limit if they want to
 
