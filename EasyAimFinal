@@ -1,0 +1,168 @@
+import pygame
+import sys
+import random
+
+#Colors in RGB code
+WHITE = (255, 255, 255)
+RED   = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE  = (0, 0, 255)
+BLACK = (0, 0, 0)
+
+#Runs the pygame system
+pygame.init()
+#Set the in game to the cursor pygame built in crosshair
+pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_CROSSHAIR))
+#Opens the pygame game display wnindow
+screen = pygame.display.set_mode((1000, 700))
+#Changes the name of the window
+pygame.display.set_caption("EasyAim")
+
+#Determines framrate for the window
+clock = pygame.time.Clock()
+
+#This limits the game to 60 FPS
+clock.tick(60)
+
+
+#Target Information for the loop to get later
+TargetLocation = [
+    (600, 200),
+    (400, 100),
+    (500, 200),
+    (300, 150)
+    ] 
+TargetSize = [
+    (40),
+    (50),
+    (30),
+    (40)
+    ]
+
+#This variable will help track of the player's score. It being defined as 0 will start the score off at 0 sot that the math later also starts adding from 0
+Score = 0
+
+#This variable sets the amount of time the game will run for in milliseconds.
+GameDuration = 30000
+
+#This will help the game track the time when the game starts by using the integrated pygame time tracking function which will get the time in milliseconds
+TimeTracker = pygame.time.get_ticks()
+
+#Allows for the game to carry out what is in the loop while the game runs
+running = True
+
+#This will track whether the game is still being played
+GameRunning = True
+
+while running:
+
+        #Sets the game into a loop where the program will check for events that are recognised by the pygame software 
+        for event in pygame.event.get():
+
+                #This line establishes and checks for events for the program to recognise, in this case, the pygame software will be able to end the game
+                if event.type == pygame.QUIT:
+                        running = False
+                #This line establishes a event for the program to recognise, in this case, the pygame software will recognise the pressing of a mouse button
+                if event.type == pygame.MOUSEBUTTONDOWN:
+
+                        #This establishes the cursor's postion when the event occurs, in this case, a mouse button press
+                        MouseX, MouseY = event.pos
+
+                        #Prints "Clicked" whenever the mouse is pressed
+                        print("Clicked:", MouseX, MouseY)
+
+                        #Checks every target's position to allow for the lines below to fetch by going through each item in the list
+                        for i in range(len(TargetLocation)):
+
+                                #New variables to establish the positions and sizes of the targets for the loop to fetch. The [i] allows for the loop to fetch the iteration of each value in the lists above
+                                TargetLocationLoop = TargetLocation[i]
+                                TargetSizeLoop = TargetSize[i]
+
+                                #Calculates and checks the distance from click to a corresponding target. The ** 2 squares the value obtained from the mouse x/y and the ** 0.5 will square root the value to obtain the final distance. This process follows the pythagoras theorem
+                                Distance = ((MouseX - TargetLocationLoop[0]) ** 2 +
+                                            (MouseY - TargetLocationLoop[1]) ** 2) ** 0.5
+                                #Checks if click hit the target and prints hit if the target is hit successfully. this is done by checking if the value calculated from the distance function is less than or equal to the target size
+                                if Distance <= TargetSizeLoop:
+                                        print("Hit!")
+
+                                         #This line will add points to the target based on the size of the target. The elif conditionals allows the program to check if the previous if condition was true or false which is what the code needs to check each target’s corresponding score-to-size.
+                                        #This fix was discovered when reading through the "Beginning GameProgrammingwith Pygame Zero" book provided in the canvas resoruces
+                                        if TargetSizeLoop == 50:
+                                                Score += 1
+                                        elif TargetSizeLoop == 40:
+                                                Score += 2
+                                        elif TargetSizeLoop == 30:
+                                                Score += 3
+
+                                        #The randint function here picks a random number out and draws a new circle in a random corresnponding area based on the number that is retrieved as long as it fits in the window. Which is the 1000/700, but the subtraction of TargetSizeLoop which is 40, is to keep things in the away from the corners and clipping.
+                                        NewX = random.randint(TargetSizeLoop, 1000 - TargetSizeLoop)
+                                        NewY = random.randint(TargetSizeLoop, 700 - TargetSizeLoop)
+                                        #This line redefines the TargetLocation[i] at the end of the loop with the new postion. This then allows the target to be relocated which allows the loop to go again 
+                                        TargetLocation[i] = (NewX, NewY)
+
+                                        #Stops 
+                                        break
+
+
+#Checks how much time has passed since the game started. 
+        CurrentTime = pygame.time.get_ticks()
+        ElapsedTime = CurrentTime - TimeTracker
+
+        #Checks if the 30-second game time has passed. Uses the operator '>=' to check if the elasped time is larger than the game duration, which then stops the game from running. The game ending also has various effects that will be explained below
+        if ElapsedTime >= GameDuration:
+                GameRunning = False
+                
+ #This fill in the background with a color
+        screen.fill(WHITE)
+        
+#Using this if conditional will have the loop run when the game runs which then only draws the targets while the game is active. Doing this also enables the else conditional below to happen after the for loop and timer are done
+        if GameRunning:
+                
+        #This loop draws all the targets onto the screen. The [i] here retrieves the corresponding target location and size from the lists, allowing the program to draw each target using its current coordinates
+                for i in range(len(TargetLocation)):
+
+                        pygame.draw.circle(
+                        screen,
+                        RED,
+                        TargetLocation[i],
+                        TargetSize[i]
+
+                        )
+
+                        #Uses the font feature in Pygame to write onto the screen the Font.render code below is the pygame intergrated function that will do this, in this case it creates the font used to display the score and timer
+                        Font = pygame.font.Font(None, 36) #The formatting here for whats in the (a file path, size) thus theres no file path so that section is none and the size is 36
+
+                        #This line of code will displays the player's current score. The str here is the text that will be displayed in the bracket, so the (Score). The color Black was already defined above at the start of the code.
+                        ScoreCount = Font.render("Score: " + str(Score), True, BLACK)
+                        screen.blit(ScoreCount, (20, 20)) #The screen.blit here takes the rendered font above and puts it onto the screen at a sepcified coordinate if it wasn't pre specified
+
+                        #This line of code will calculate in seconds
+                        TimeRemaining = max(0, (GameDuration - ElapsedTime) // 1000)
+
+                        #This code will display the amount of time remaining. It uses the same pygame font function as the score system above
+                        TimeLeft = Font.render("Time: " + str(TimeRemaining), True, BLACK)
+                        screen.blit(TimeLeft, (850, 20))
+
+        else: #As this occurs after the time remaining reaches zero, this conditional will run and execute the following lines of code
+
+                #Creates the font used for the final score screen, once again using the text drawing feature in pygame and the formatting 
+                EndText = pygame.font.Font(None, 72)
+
+                #Using the pygame font and the pygame 'rect' function to draw a rectangle on the screen that will have the "TIME'S UP" message when the timer reaches zero
+                GameEndText = EndText.render("TIME'S UP", True, RED)
+                GameEndDraw = GameEndText.get_rect(center=(500, 250)) #These values are based on where I want the text to appear, 500, 350 is the exact center but I want the text to appear slightly above as I will have another line of text in the center and having both texts at the same coordinates will cause them to overlap
+                screen.blit(GameEndText, GameEndDraw)#This is the same screen.blit as above but without the coordinates as they were specified in an earlier line of code
+
+                #This line of text will display the player's final store using the same line of thought as above
+                FinalScoreText = EndText.render("FINAL SCORE: " + str(Score), True, BLUE)
+                FinalScoreRectangle = FinalScoreText.get_rect(center=(500, 350))#These values here are the direct coordinates for the center of the screen
+                screen.blit(FinalScoreText, FinalScoreRectangle)
+
+        #Updates the full display Surface to the screen
+        pygame.display.flip()
+
+        #Limits the game to 60 FPS
+        clock.tick(60)
+
+pygame.quit()
+sys.exit()
