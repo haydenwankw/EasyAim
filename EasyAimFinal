@@ -9,16 +9,16 @@ GREEN = (0, 255, 0)
 BLUE  = (0, 0, 255)
 BLACK = (0, 0, 0)
 
-#Runs the pygame system
+#Runs the pygame system using the built-in system that can be found in the Pygame documentation
 pygame.init()
-#Set the in game to the cursor pygame built in crosshair
+#Set the in game to the cursor pygame built in crosshair. The code and preset for this was found in Pygame documentation
 pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_CROSSHAIR))
-#Opens the pygame game display wnindow
+#Opens the pygame game display window. Found in Pygame documentation
 screen = pygame.display.set_mode((1000, 700))
-#Changes the name of the window
+#Changes the name of the window using the built-in system that can be found the Pygame documentation
 pygame.display.set_caption("EasyAim")
 
-#Determines framrate for the window
+#Determines framrate for the window. Found in Pygame documentation
 clock = pygame.time.Clock()
 
 #This limits the game to 60 FPS
